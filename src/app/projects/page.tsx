@@ -9,13 +9,13 @@ const projects = [
     slug: "whooshbus",
     title: "WhooshBus",
     desc: "Full-stack bus booking system built with Next.js & MongoDB.",
-    img: "/projects/whooshbus.png",
+    img: "/w1.PNG",
   },
   {
     slug: "mini-ecommerce",
     title: "Mini E-commerce",
     desc: "Landing page, product page, and cart feature with Next.js.",
-    img: "/projects/ecommerce.png",
+    img: "/ecom.png",
   },
 ];
 
