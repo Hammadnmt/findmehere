@@ -25,6 +25,11 @@ const projectDetails: Record<string, { title: string; desc: string; img: string[
     img: ["/ecom.png", "/ecom3.png", "/ecom4.png", "/ecom2.png"],
     tech: ["Next.js", "Shadcn/UI", "Stripe", "MongoDB"],
   },
+  pdfparsingpiplinesaas: {
+    title: "DocuMind",
+    desc: "Ai powered Saas application , which solves problem related to parsing pdf and explain the different nature of uploaded documents. Use Google Gemini APi for parsing and explaining the pdfs. It also has a feature to upload pdfs and get the summary of the pdf. ",
+    img: ["/s1.PNG", "/s2.PNG", "/s3.PNG", "/s5.PNG"],
+  },
 };
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {

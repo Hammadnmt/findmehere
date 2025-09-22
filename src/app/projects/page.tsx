@@ -17,6 +17,12 @@ const projects = [
     desc: "Landing page, product page, and cart feature with Next.js.",
     img: "/ecom.png",
   },
+  {
+    slug: "pdfparsingpiplinesaas",
+    title: "DocuMind",
+    desc: "Ai powered Saas application , which solves problem related to parsing pdf and explain the different nature of uploaded documents",
+    img: "/s1.PNG",
+  },
 ];
 
 export default function ProjectsPage() {
