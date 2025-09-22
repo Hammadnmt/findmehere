@@ -16,7 +16,7 @@ const projectDetails: Record<string, { title: string; desc: string; img: string[
   whooshbus: {
     title: "WhooshBus",
     desc: "A full-stack Next.js bus booking platform with authentication, seat booking, and real-time updates.",
-    img: ["/w1.png", "/w2.png", "/w3.png", "/w4.png", "/w5.png"],
+    img: ["/w1.PNG", "/w2.PNG", "/w3.PNG", "/w4.PNG", "/w5.PNG"],
     tech: ["Next.js", "TailwindCSS", "Node.js", "MongoDB", "Socket.io"],
   },
   "mini-ecommerce": {
@@ -29,6 +29,7 @@ const projectDetails: Record<string, { title: string; desc: string; img: string[
     title: "DocuMind",
     desc: "Ai powered Saas application , which solves problem related to parsing pdf and explain the different nature of uploaded documents. Use Google Gemini APi for parsing and explaining the pdfs. It also has a feature to upload pdfs and get the summary of the pdf. ",
     img: ["/s1.PNG", "/s2.PNG", "/s3.PNG", "/s5.PNG"],
+    tech: ["Next.js", "TailwindCSS", "Shadcn", "MongoDB", "Gemini AI", "Saas", "Admin Dashboard"],
   },
 };
 
