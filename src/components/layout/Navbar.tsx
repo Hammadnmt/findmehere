@@ -20,24 +20,24 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="border-b bg-white/80 dark:bg-black/80 backdrop-blur-md sticky top-0 z-50"
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50"
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="font-heading font-bold text-xl">
-          HJ<span className="text-brand-dark">.</span>
+        <Link href="/" className="font-bold text-xl tracking-tighter uppercase">
+          HAMMAD<span className="text-muted-foreground">.</span>
         </Link>
 
         {/* Navigation */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-brand-dark",
-                pathname === link.href ? "text-brand-dark" : "text-muted-foreground"
+                "text-[10px] font-bold tracking-[0.2em] uppercase transition-colors hover:text-foreground",
+                pathname === link.href ? "text-foreground" : "text-muted-foreground"
               )}
             >
               {link.label}

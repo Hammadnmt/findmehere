@@ -1,122 +1,144 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code } from "lucide-react";
+import { ArrowRight, Cpu, Globe, Zap } from "lucide-react";
+import Link from "next/link";
 
 export default function HomePage() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+    },
+  };
+
   return (
-    <div>
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Background Grid */}
+      <div className="absolute inset-0 bg-grid pointer-events-none opacity-20" />
+      
       {/* Hero Section */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+      <section className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-24 md:pt-48 md:pb-32">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-start text-left"
         >
-          Hammad Javed
-        </motion.h1>
+          <motion.p
+            variants={itemVariants}
+            className="text-xs font-bold tracking-[0.3em] text-muted-foreground uppercase mb-6"
+          >
+            Available for Freelance Projects
+          </motion.p>
+          
+          <motion.h1
+            variants={itemVariants}
+            className="text-5xl md:text-7xl lg:text-8xl font-light leading-[1.1] mb-8 max-w-5xl"
+          >
+            I Build Systems That <br />
+            <span className="text-muted-foreground">Grow With Your Business.</span>
+          </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-4 text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto"
-        >
-          Full Stack Developer crafting scalable MERN & Next.js solutions
-        </motion.p>
-      </section>
+          <motion.p
+            variants={itemVariants}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 font-light leading-relaxed"
+          >
+            Full Stack Engineer specializing in high-performance Next.js architectures 
+            and scalable Node.js backends. Turning complex business requirements 
+            into seamless digital experiences.
+          </motion.p>
 
-      {/* About Me */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-6"
-        >
-          About Me
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed"
-        >
-          Full Stack Software Engineer with 2 years of experience in{" "}
-          <span className="font-semibold">Next.js</span> and <span className="font-semibold">Node.js</span>. I
-          specialize in building scalable applications with{" "}
-          <span className="font-semibold">React, TailwindCSS, and modern UI libraries</span>. Outside of
-          coding, I enjoy playing <span className="font-semibold">Tekken</span> and{" "}
-          <span className="font-semibold">Sniper Elite</span>.
-        </motion.p>
-      </section>
-
-      {/* Skills */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center mb-8"
-        >
-          Skills
-        </motion.h2>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 text-center">
-          {[
-            { icon: <Code size={28} />, label: "Next.js" },
-            { icon: <Code size={28} />, label: "Node.js" },
-            { icon: <Code size={28} />, label: "React" },
-            { icon: <Code size={28} />, label: "TailwindCSS" },
-            { icon: <Code size={28} />, label: "MongoDB" },
-            { icon: <Code size={28} />, label: "TypeScript" },
-            { icon: <Code size={28} />, label: "AWS" },
-            { icon: <Code size={28} />, label: "Docker" },
-          ].map((skill, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
-              className="p-3 sm:p-4 rounded-xl bg-muted hover:shadow-lg transition"
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+            <Link
+              href="/contact"
+              className="group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-sm font-bold tracking-widest uppercase text-[11px] transition-all hover:opacity-90"
             >
-              <div className="flex justify-center mb-2 text-primary">{skill.icon}</div>
-              <p className="text-xs sm:text-sm md:text-base font-medium">{skill.label}</p>
-            </motion.div>
-          ))}
+              Start a Project
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="/projects"
+              className="flex items-center gap-3 border border-border px-8 py-4 rounded-sm font-bold tracking-widest uppercase text-[11px] transition-all hover:bg-muted"
+            >
+              View Case Studies
+            </Link>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Value Proposition */}
+      <section className="relative z-10 border-y border-border bg-muted/30">
+        <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
+          <div className="grid md:grid-cols-3 gap-16">
+            {[
+              {
+                icon: <Zap className="text-primary w-8 h-8" />,
+                title: "Scalable Architecture",
+                desc: "Systems built to handle growth. From day one, your application is ready for thousands of users without breaking a sweat.",
+              },
+              {
+                icon: <Cpu className="text-primary w-8 h-8" />,
+                title: "AI Integration",
+                desc: "Modernizing workflows with custom AI pipelines. Transforming raw data into automated insights that drive decision-making.",
+              },
+              {
+                icon: <Globe className="text-primary w-8 h-8" />,
+                title: "Performance First",
+                desc: "Optimizing for speed and SEO. Delivering lightning-fast experiences that keep users engaged and search engines happy.",
+              },
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+                className="flex flex-col gap-6"
+              >
+                {feature.icon}
+                <h3 className="text-2xl font-light">{feature.title}</h3>
+                <p className="text-muted-foreground font-light leading-relaxed">
+                  {feature.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Learning Journey Timeline */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center mb-8"
-        >
-          Learning Journey
-        </motion.h2>
-
-        <div className="relative border-l border-muted-foreground/30 space-y-8">
+      {/* Social Proof / Stats */}
+      <section className="relative z-10 max-w-7xl mx-auto px-6 py-24 md:py-32">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
           {[
-            { year: "Start", text: ".NET foundation" },
-            { year: "Transition", text: "Node.js + Express" },
-            { year: "Frontend", text: "React + HTML + CSS + Bootstrap" },
-            { year: "UI Upgrade", text: "React + Tailwind + ShadCN" },
-            { year: "Now", text: "Next.js Full Stack + Tailwind + ShadCN" },
-          ].map((item, i) => (
+            { label: "Years Experience", value: "2+" },
+            { label: "Projects Delivered", value: "15+" },
+            { label: "Performance Score", value: "99%" },
+            { label: "Happy Clients", value: "100%" },
+          ].map((stat, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.2 }}
-              className="ml-6"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
             >
-              <div className="absolute -left-3 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-primary rounded-full border-2 border-background"></div>
-              <h3 className="text-sm sm:text-base md:text-lg font-semibold">{item.year}</h3>
-              <p className="text-xs sm:text-sm md:text-base text-muted-foreground">{item.text}</p>
+              <h4 className="text-4xl md:text-5xl font-light mb-2">{stat.value}</h4>
+              <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+                {stat.label}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -124,3 +146,4 @@ export default function HomePage() {
     </div>
   );
 }
+

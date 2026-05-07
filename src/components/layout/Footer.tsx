@@ -7,35 +7,32 @@ import { motion } from "framer-motion";
 export default function Footer() {
   return (
     <motion.footer
-      initial={{ y: 50, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
       viewport={{ once: true }}
-      className="border-t py-8 mt-12"
+      className="border-t border-border py-12 bg-background"
     >
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Hammad Javed. All rights reserved.
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+          © {new Date().getFullYear()} Hammad Javed. All Rights Reserved.
         </p>
 
-        <div className="flex gap-4">
-          <Link href="mailto:hammad.alinmt@gmail.com" className="text-muted-foreground hover:text-brand-dark">
-            <Mail className="h-5 w-5" />
-          </Link>
-          <Link
-            href="https://github.com/Hammadnmt"
-            target="_blank"
-            className="text-muted-foreground hover:text-brand-dark"
-          >
-            <Github className="h-5 w-5" />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/hammadali909/"
-            target="_blank"
-            className="text-muted-foreground hover:text-brand-dark"
-          >
-            <Linkedin className="h-5 w-5" />
-          </Link>
+        <div className="flex gap-8">
+          {[
+            { href: "mailto:hammad.alinmt@gmail.com", icon: Mail },
+            { href: "https://github.com/Hammadnmt", icon: Github },
+            { href: "https://www.linkedin.com/in/hammadali909/", icon: Linkedin },
+          ].map((item, i) => (
+            <Link
+              key={i}
+              href={item.href}
+              target="_blank"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <item.icon size={18} strokeWidth={1.5} />
+            </Link>
+          ))}
         </div>
       </div>
     </motion.footer>
