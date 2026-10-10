@@ -28,6 +28,33 @@ interface ProjectDetail {
 }
 
 const projectDetails: Record<string, ProjectDetail> = {
+  "saudi-uzbek-business-council": {
+    title: "Saudi Uzbek Business Council (SUBC) — Investor Relations Platform",
+    category: "Investor Relations / Headless CMS",
+    fullDesc: `Overview
+Built the investor-facing website for the Saudi Uzbek Business Council (su-bc.com) as part of an engineering team. The platform serves as the digital gateway for bilateral economic cooperation and institutional investment between Saudi Arabia and Uzbekistan. I owned the Strapi CMS backend architecture and the Next.js frontend implementation end-to-end: custom content collection types, the API layer to render that content, an investor inquiry form with submission handling, Lenis smooth-scroll interactions, and dark/light theming.
+
+What I built
+1. Strapi CMS Backend Architecture: Configured and deployed custom content collection types, single types, and structured relations, providing non-technical council administrators with a robust headless content management interface.
+2. Next.js API & Rendering Layer: Built a performant data-fetching layer consuming Strapi REST endpoints to hydrate investor-facing pages dynamically with minimal server overhead.
+3. Investor Inquiry Engine: Engineered an investor inquiry form with comprehensive client-side validation, server-side payload handling, and reliable email/webhook submission routing.
+4. Lenis Smooth Scrolling & Motion: Integrated Lenis smooth-scroll interactions combined with Framer Motion transitions for a modern, executive-grade digital presence.
+5. Adaptive Theme System: Implemented dark and light theme support adhering to clean typographic and high-contrast design standards.`,
+    tech: [
+      "Next.js",
+      "Strapi CMS",
+      "TypeScript",
+      "TailwindCSS",
+      "REST API",
+      "Lenis Scroll",
+      "Framer Motion",
+      "React",
+    ],
+    impact: "Delivered in 2 weeks, live in production, with investors actively submitting inquiries through it.",
+    impactLabel: "Delivery & Impact",
+    liveUrl: "https://su-bc.com",
+    img: ["/subc-01.png", "/subc-02.png", "/subc-03.png"],
+  },
   "elite-cms": {
     title: "Elite CMS & Business Automation",
     category: "Enterprise SaaS",
@@ -128,14 +155,14 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               </div>
             </motion.div>
 
-            {/* Visual Media (Image/Carousel & Architecture Diagram) */}
+            {/* Visual Media (Image/Carousel, Architecture Diagram or Live Platform Banner) */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 1 }}
               className="space-y-8"
             >
-              {project.img && project.img.length > 0 && (
+              {project.img && project.img.length > 0 ? (
                 <div className="relative">
                   <Carousel className="w-full">
                     <CarouselContent>
@@ -160,7 +187,38 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                     )}
                   </Carousel>
                 </div>
-              )}
+              ) : project.liveUrl && slug !== "order-fulfillment-erp-integration" ? (
+                <div className="aspect-[16/10] border border-border rounded-sm bg-muted/20 flex flex-col justify-between p-8">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+                      Production Platform
+                    </span>
+                    <span className="inline-flex items-center gap-2 text-[10px] font-mono border border-border px-3 py-1 rounded-sm text-foreground bg-background">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Live in Production
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-2xl md:text-3xl font-light text-foreground">
+                      {project.title}
+                    </p>
+                    <p className="text-sm md:text-base text-muted-foreground font-light max-w-xl leading-relaxed">
+                      Explore the live investor relations website, headless Strapi CMS dynamic pages, and interactive inquiry flow directly online.
+                    </p>
+                  </div>
+                  <div>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2.5 bg-foreground text-background px-6 py-3 rounded-sm text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all"
+                    >
+                      Visit su-bc.com
+                      <ExternalLink size={14} />
+                    </a>
+                  </div>
+                </div>
+              ) : null}
 
               {slug === "order-fulfillment-erp-integration" && (
                 <FulfillmentArchitectureDiagram />

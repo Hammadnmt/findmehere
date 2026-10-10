@@ -34,6 +34,15 @@ const projects: Project[] = [
     img: "/homePage.jpeg",
   },
   {
+    slug: "saudi-uzbek-business-council",
+    title: "Saudi Uzbek Business Council (SUBC) — Investor Relations Platform",
+    category: "Investor Relations / Headless CMS",
+    description: "Investor-facing digital portal for the Saudi Uzbek Business Council (su-bc.com). Engineered with Next.js and a headless Strapi CMS to facilitate cross-border investment inquiries and economic partnerships.",
+    impact: "Delivered in 2 weeks; live in production actively facilitating cross-border investor inquiries.",
+    impactLabel: "Delivery & Impact",
+    img: "/subc-01.png",
+  },
+  {
     slug: "whoosh-logistics",
     title: "Whoosh Logistics",
     category: "Full Stack System",
@@ -49,7 +58,6 @@ const projects: Project[] = [
     impact: "Saved enterprise clients 20+ hours of manual data entry per week.",
     img: "/s1.PNG",
   },
-  
 ];
 
 export default function ProjectsPage() {
@@ -93,27 +101,27 @@ export default function ProjectsPage() {
                     <div className="w-full h-full flex flex-col justify-between p-6 bg-muted/40 border border-border transition-colors group-hover:bg-muted/60">
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                          Architecture &amp; Integration
+                          {p.category}
                         </span>
-                        <span className="text-[10px] font-mono border border-border px-2 py-0.5 rounded-sm text-muted-foreground">
-                          ERP Flow
+                        <span className="text-[10px] font-mono border border-border px-2 py-0.5 rounded-sm text-foreground bg-background">
+                          Live Case Study
                         </span>
                       </div>
                       <div className="space-y-1.5">
                         <p className="text-xs font-mono text-muted-foreground">
-                          Shopify / WooCommerce &rarr; Webhooks &rarr; ERP
+                          Production Platform
                         </p>
-                        <p className="text-sm font-light text-foreground">
-                          Automated Processing &amp; Dispatch Flow
+                        <p className="text-base font-light text-foreground line-clamp-2">
+                          {p.title}
                         </p>
                       </div>
                       <div className="text-[10px] font-mono text-muted-foreground">
-                        SAP (Service Layer) / Odoo (RPC)
+                        Next.js &bull; Headless Architecture &bull; Production
                       </div>
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-between items-start">
                     <div>
@@ -128,11 +136,11 @@ export default function ProjectsPage() {
                       <ArrowUpRight size={20} />
                     </div>
                   </div>
-                  
+
                   <p className="text-lg text-muted-foreground font-light leading-relaxed">
                     {p.description}
                   </p>
-                  
+
                   <div className="bg-muted/50 p-6 rounded-sm border-l-2 border-foreground">
                     <p className="text-xs font-bold tracking-widest uppercase mb-1">{p.impactLabel ?? "Impact"}</p>
                     <p className="text-sm font-medium">{p.impact}</p>
