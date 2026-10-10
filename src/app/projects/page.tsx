@@ -5,7 +5,26 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-const projects = [
+interface Project {
+  slug: string;
+  title: string;
+  category: string;
+  description: string;
+  impact: string;
+  impactLabel?: string;
+  img?: string;
+}
+
+const projects: Project[] = [
+  {
+    slug: "order-fulfillment-erp-integration",
+    title: "Automated Order Processing & ERP Integration for a Multi-Channel Fulfillment SaaS",
+    category: "SaaS / E-commerce Integration",
+    description: "Shopify and WooCommerce orders flowing into SAP or Odoo, with automated processing and dispatch. Built as a full-stack engineer on a SaaS product team.",
+    impact: "Scope: order intake, processing engine, dispatch. Duration: about 1 month. Status: not in production; working demo available locally.",
+    impactLabel: "Scope & Status",
+    img: "/erp_middleware_pitch_1791054743237.jpg",
+  },
   {
     slug: "elite-cms",
     title: "Elite CMS & Business Automation",
@@ -30,6 +49,7 @@ const projects = [
     impact: "Saved enterprise clients 20+ hours of manual data entry per week.",
     img: "/s1.PNG",
   },
+  
 ];
 
 export default function ProjectsPage() {
@@ -62,12 +82,36 @@ export default function ProjectsPage() {
             >
               <Link href={`/projects/${p.slug}`} className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="relative aspect-[16/9] overflow-hidden bg-muted">
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                  />
+                  {p.img ? (
+                    <Image
+                      src={p.img}
+                      alt={p.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col justify-between p-6 bg-muted/40 border border-border transition-colors group-hover:bg-muted/60">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+                          Architecture &amp; Integration
+                        </span>
+                        <span className="text-[10px] font-mono border border-border px-2 py-0.5 rounded-sm text-muted-foreground">
+                          ERP Flow
+                        </span>
+                      </div>
+                      <div className="space-y-1.5">
+                        <p className="text-xs font-mono text-muted-foreground">
+                          Shopify / WooCommerce &rarr; Webhooks &rarr; ERP
+                        </p>
+                        <p className="text-sm font-light text-foreground">
+                          Automated Processing &amp; Dispatch Flow
+                        </p>
+                      </div>
+                      <div className="text-[10px] font-mono text-muted-foreground">
+                        SAP (Service Layer) / Odoo (RPC)
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex flex-col gap-6">
@@ -90,7 +134,7 @@ export default function ProjectsPage() {
                   </p>
                   
                   <div className="bg-muted/50 p-6 rounded-sm border-l-2 border-foreground">
-                    <p className="text-xs font-bold tracking-widest uppercase mb-1">Impact</p>
+                    <p className="text-xs font-bold tracking-widest uppercase mb-1">{p.impactLabel ?? "Impact"}</p>
                     <p className="text-sm font-medium">{p.impact}</p>
                   </div>
                 </div>

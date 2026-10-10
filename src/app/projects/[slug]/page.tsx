@@ -13,8 +13,21 @@ import { Badge } from "@/components/ui/badge";
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { FulfillmentArchitectureDiagram } from "@/components/fulfillment-architecture-diagram";
 
-const projectDetails: Record<string, { title: string; category: string; fullDesc: string; img: string[]; tech: string[]; impact: string; liveUrl?: string }> = {
+interface ProjectDetail {
+  title: string;
+  category: string;
+  fullDesc: string;
+  img?: string[];
+  tech: string[];
+  impact: string;
+  impactLabel?: string;
+  liveUrl?: string;
+}
+
+const projectDetails: Record<string, ProjectDetail> = {
   "elite-cms": {
     title: "Elite CMS & Business Automation",
     category: "Enterprise SaaS",
@@ -39,6 +52,34 @@ const projectDetails: Record<string, { title: string; category: string; fullDesc
     img: ["/s1.PNG", "/s2.PNG", "/s3.PNG", "/s5.PNG"],
     tech: ["Next.js", "Google Gemini API", "Vector Databases", "Shadcn UI", "MongoDB"],
     impact: "Saved clients an average of 20 hours per week in manual document review.",
+  },
+  "order-fulfillment-erp-integration": {
+    title: "Automated Order Processing & ERP Integration for a Multi-Channel Fulfillment SaaS",
+    category: "SaaS / E-commerce Integration",
+    fullDesc: `Overview
+My company built a SaaS platform that automates order fulfillment for online sellers. It connects Shopify and WooCommerce stores to an ERP (SAP or Odoo) and carries each order through warehouse allocation, packing, courier handover and delivery. It is licensed per client: a license sets limits such as number of warehouses and monthly orders (for example 3 warehouses and 1,000 orders), and extra sales channels can be unlocked as add-ons on top of the base license. I was a full-stack engineer on the team and owned the order intake, the automated order processing engine and the dispatch module, including their ERP integration, logging and error handling.
+
+What I built
+1. Secure order intake. Webhook endpoints for Shopify and WooCommerce, HMAC signature verification so only genuine requests are accepted, and parsing of each platform's payload into the platform's order schema before handing the order to the order service for storage.
+2. Order processing engine (scheduled job). Picks up confirmed orders plus previously failed ones and runs four steps: create the ERP sales order, allocate a warehouse that can fulfil the whole order, allocate a courier consignment number, generate a QR code. If a step fails, the error is logged and the order is held and retried on a later run without blocking other orders.
+3. Dispatch module. Packed orders are handed to a courier person in bulk; each dispatch creates a delivery note in the ERP.
+4. ERP integration. SAP through Service Layer APIs and Odoo through RPC calls, behind one shared processing flow.
+5. Logging and error handling. Failures are recorded as structured logs so a failed order can be traced to its cause and recovered.`,
+    tech: [
+      "NestJS",
+      "TypeScript",
+      "PostgreSQL",
+      "TypeORM",
+      "React",
+      "SAP Service Layer API",
+      "Odoo RPC",
+      "Shopify Webhooks",
+      "WooCommerce Webhooks",
+      "HMAC-SHA256",
+    ],
+    impact: "Scope: order intake, processing engine, dispatch. Duration: about 1 month. Status: not in production; working demo available locally.",
+    impactLabel: "Scope & Status",
+    img: ["/erp_middleware_pitch_1791054743237.jpg"],
   },
 };
 
@@ -82,38 +123,48 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-8">
                 {project.title}
               </h1>
-              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-3xl">
+              <div className="text-xl text-muted-foreground font-light leading-relaxed max-w-3xl whitespace-pre-line">
                 {project.fullDesc}
-              </p>
+              </div>
             </motion.div>
 
-            {/* Carousel */}
+            {/* Visual Media (Image/Carousel & Architecture Diagram) */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 1 }}
-              className="relative"
+              className="space-y-8"
             >
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {project.img.map((src, idx) => (
-                    <CarouselItem key={idx}>
-                      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                        <Image
-                          src={src}
-                          alt={`${project.title} screenshot ${idx + 1}`}
-                          fill
-                          className="object-cover opacity-90"
-                        />
+              {project.img && project.img.length > 0 && (
+                <div className="relative">
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {project.img.map((src, idx) => (
+                        <CarouselItem key={idx}>
+                          <div className="relative aspect-[16/10] overflow-hidden bg-muted border border-border rounded-sm">
+                            <Image
+                              src={src}
+                              alt={`${project.title} visual ${idx + 1}`}
+                              fill
+                              className="object-cover opacity-90"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    {project.img.length > 1 && (
+                      <div className="absolute bottom-6 right-16 flex gap-2">
+                        <CarouselPrevious className="relative left-0 translate-y-0 rounded-sm bg-background border-border hover:bg-muted" />
+                        <CarouselNext className="relative right-0 translate-y-0 rounded-sm bg-background border-border hover:bg-muted" />
                       </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="absolute bottom-6 right-16 flex gap-2">
-                  <CarouselPrevious className="relative left-0 translate-y-0 rounded-sm bg-background border-border hover:bg-muted" />
-                  <CarouselNext className="relative right-0 translate-y-0 rounded-sm bg-background border-border hover:bg-muted" />
+                    )}
+                  </Carousel>
                 </div>
-              </Carousel>
+              )}
+
+              {slug === "order-fulfillment-erp-integration" && (
+                <FulfillmentArchitectureDiagram />
+              )}
             </motion.div>
           </div>
 
@@ -126,10 +177,12 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               className="space-y-8"
             >
               <div>
-                <h4 className="text-xs font-bold tracking-widest uppercase mb-4">Core Impact</h4>
+                <h4 className="text-xs font-bold tracking-widest uppercase mb-4">
+                  {project.impactLabel ?? "Core Impact"}
+                </h4>
                 <div className="p-6 border border-border rounded-sm bg-muted/30">
-                  <p className="text-lg font-light leading-relaxed italic text-foreground">
-                    &quot;{project.impact}&quot;
+                  <p className={cn("text-lg font-light leading-relaxed text-foreground", !project.impactLabel && "italic")}>
+                    {project.impactLabel ? project.impact : `"${project.impact}"`}
                   </p>
                 </div>
               </div>
