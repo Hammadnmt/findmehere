@@ -42,22 +42,6 @@ const projects: Project[] = [
     impactLabel: "Delivery & Impact",
     img: "/subc-01.png",
   },
-  {
-    slug: "whoosh-logistics",
-    title: "Whoosh Logistics",
-    category: "Full Stack System",
-    description: "Built a high-performance transit booking engine capable of handling real-time seat allocation and thousands of concurrent transactions.",
-    impact: "30% increase in booking efficiency for local transit providers.",
-    img: "/w1.PNG",
-  },
-  {
-    slug: "documind-ai",
-    title: "DocuMind AI",
-    category: "SaaS Application",
-    description: "Engineered an AI-powered document intelligence platform that automates complex PDF parsing and categorizes data with 98% accuracy.",
-    impact: "Saved enterprise clients 20+ hours of manual data entry per week.",
-    img: "/s1.PNG",
-  },
 ];
 
 export default function ProjectsPage() {
