@@ -17,6 +17,24 @@ interface Project {
 
 const projects: Project[] = [
   {
+    slug: "crm-integrated-website-supabase-web-app",
+    title: "CRM-Integrated Website with a Supabase Web App",
+    category: "Architecture Design / Integration",
+    description: "System architecture blueprint for a small business website connecting lead and intake forms to HubSpot, GoHighLevel, and Karbon, paired with an authenticated Supabase dashboard.",
+    impact: "Status: Architecture Design Only (self-initiated design specification; not deployed to production).",
+    impactLabel: "Status & Scope",
+    img: "/arch.svg",
+  },
+  {
+    slug: "saudi-uzbek-business-council",
+    title: "Saudi Uzbek Business Council (SUBC) — Investor Relations Platform",
+    category: "Investor Relations / Headless CMS",
+    description: "Investor-facing digital portal for the Saudi Uzbek Business Council (su-bc.com). Engineered with Next.js and a headless Strapi CMS to facilitate cross-border investment inquiries and economic partnerships.",
+    impact: "Delivered in 2 weeks; live in production actively facilitating cross-border investor inquiries.",
+    impactLabel: "Delivery & Impact",
+    img: "/subc-01.png",
+  },
+  {
     slug: "order-fulfillment-erp-integration",
     title: "Automated Order Processing & ERP Integration for a Multi-Channel Fulfillment SaaS",
     category: "SaaS / E-commerce Integration",
@@ -34,13 +52,20 @@ const projects: Project[] = [
     img: "/homePage.jpeg",
   },
   {
-    slug: "saudi-uzbek-business-council",
-    title: "Saudi Uzbek Business Council (SUBC) — Investor Relations Platform",
-    category: "Investor Relations / Headless CMS",
-    description: "Investor-facing digital portal for the Saudi Uzbek Business Council (su-bc.com). Engineered with Next.js and a headless Strapi CMS to facilitate cross-border investment inquiries and economic partnerships.",
-    impact: "Delivered in 2 weeks; live in production actively facilitating cross-border investor inquiries.",
-    impactLabel: "Delivery & Impact",
-    img: "/subc-01.png",
+    slug: "whoosh-logistics",
+    title: "Whoosh Logistics",
+    category: "Full Stack System",
+    description: "Built a high-performance transit booking engine capable of handling real-time seat allocation and thousands of concurrent transactions.",
+    impact: "30% increase in booking efficiency for local transit providers.",
+    img: "/w1.PNG",
+  },
+  {
+    slug: "documind-ai",
+    title: "DocuMind AI",
+    category: "SaaS Application",
+    description: "Engineered an AI-powered document intelligence platform that automates complex PDF parsing and categorizes data with 98% accuracy.",
+    impact: "Saved enterprise clients 20+ hours of manual data entry per week.",
+    img: "/s1.PNG",
   },
 ];
 

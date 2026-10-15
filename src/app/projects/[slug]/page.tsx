@@ -15,6 +15,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FulfillmentArchitectureDiagram } from "@/components/fulfillment-architecture-diagram";
+import { CrmArchitectureViewer } from "@/components/crm-architecture-viewer";
 
 interface ProjectDetail {
   title: string;
@@ -28,6 +29,80 @@ interface ProjectDetail {
 }
 
 const projectDetails: Record<string, ProjectDetail> = {
+  "crm-integrated-website-supabase-web-app": {
+    title: "CRM-Integrated Website with a Supabase Web App",
+    category: "Architecture Design / Integration",
+    fullDesc: `1. Overview
+I designed this comprehensive system architecture for a modern small business website—modeled on a fictional accounting and professional services firm—whose lead generation and intake booking forms flow directly into external CRMs, backed by an authenticated client dashboard powered by Supabase.
+
+Please note: The accounting firm client is entirely fictional, and this is a self-initiated portfolio architecture project designed to model, test, and document production-minded integration practices.
+
+2. Goals
+The core technical and architectural objectives of this design are:
+• Connect a marketing frontend to multiple enterprise CRMs: Seamlessly bridge public-facing web forms with HubSpot, GoHighLevel, and Karbon.
+• Build a modern authenticated web app on Supabase: Demonstrate Supabase Auth, PostgreSQL with Row-Level Security (RLS), Edge Functions, and Realtime live subscriptions.
+• Implement production-grade integration practices: Replace brittle direct API calls with idempotent endpoints, cryptographic signature validation, background retry queues with exponential backoff, dead-letter storage, and clear source-of-truth resolution.
+
+3. Architecture
+The full architecture diagram shown above illustrates the end-to-end data lifecycle across four primary layers:
+
+• Frontend (Next.js on Vercel):
+A performant marketing site built with Next.js (SSG) for fast initial loads and SEO. It features a public lead/contact form equipped with validation and CAPTCHA, a structured multi-step client intake and booking form (following a Karbon-style onboarding flow), and an authenticated client dashboard displaying active leads, deals, and sync status.
+
+• Integration Layer (API Routes & Edge Functions):
+A centralized intake handler (POST /api/lead) validating inputs via Zod schemas and deduplicating submissions using client-generated idempotency keys. Individual CRM adapters (HubSpotClient, GHLClient, KarbonClient) normalize API differences. Webhook receivers (/api/webhooks/{crm}) verify provider signatures before processing, and a background retry worker manages transient failures with exponential backoff and dead-letter recording. Secrets and OAuth tokens are isolated in environment variables.
+
+• Supabase (Data, Auth & Realtime):
+Supabase Auth handles user sessions and JWT issuance. PostgreSQL manages structured data across four dedicated tables: leads, crm_contacts, sync_events, and webhook_log, strictly isolated by Row-Level Security (RLS). Edge Functions handle scheduled CRM sync jobs via cron, Supabase Realtime pushes live lead and sync updates to the frontend dashboard, and Supabase Storage securely holds intake attachments.
+
+• External CRMs:
+Integrates with HubSpot (Forms, Contacts, and Deals API; incoming webhooks), GoHighLevel (Contacts and Opportunities API; workflow webhooks), and Karbon (Contacts and Work Items API; webhooks, subject to trial/partner access).
+
+4. Key Design Decisions
+• Idempotent Webhook Handling: Webhook delivery is notoriously at-least-once. Inbound webhooks compute a deterministic hash or read the vendor's event ID, logging each to the webhook_log table to guarantee idempotency and avoid duplicate lead creation.
+• Source-of-Truth & Conflict Handling: Supabase is authoritative for initial form submissions and client intake data, while the CRM remains the system of record for deal stages and sales pipeline transitions. Bi-directional sync reconciles state based on updated_at timestamps, with every mutation recorded in sync_events.
+• Why an Adapter Pattern per CRM: Each CRM features distinct authentication protocols (API keys vs. OAuth2), payload schemas, and rate limits. The adapter pattern isolates vendor-specific nuances behind a standardized interface, allowing CRMs to be swapped or added without touching frontend components or schema models.
+• Why Row-Level Security (RLS): RLS enforces strict security at the database engine level. Even in the event of an API misconfiguration, authenticated dashboard users are restricted to querying only their own tenant and account records.
+• Why Retries and a Dead-Letter Table: External CRM endpoints occasionally suffer transient 429 rate limits or network blips. Failed dispatches undergo up to 5 retries with jittered exponential backoff. Completely unrecoverable payloads route into a dead-letter table for inspection rather than being permanently lost.
+
+5. Planned Hardening
+Based on the architectural diagram's missing-layer specifications, the following hardening steps are planned prior to production launch:
+• Observability: Sentry error tracking, structured JSON logs with trace correlation IDs, and synthetic endpoint uptime monitoring.
+• Abuse Protection: Turnstile/CAPTCHA verification on public forms, IP-based edge rate limiting, and hidden honeypot fields to block automated spam.
+• CI/CD with Staging: Automated GitHub Actions pipelines, Vercel preview deployments, Supabase branch databases for schema migrations, and isolated CRM sandbox accounts.
+• Infrastructure: Cloudflare DNS with Web Application Firewall (WAF) rules and edge caching.
+• Compliance & Governance: Clear consent checkboxes, privacy policy disclosures, user data deletion routines, and explicit demo-data watermarks.
+• Testing: Automated Playwright end-to-end integration tests and simulated webhook delivery suites.
+
+6. Tech Stack
+Next.js, React, TypeScript, TailwindCSS, Supabase, PostgreSQL, Row-Level Security (RLS), HubSpot API, GoHighLevel API, Karbon API, Edge Functions, Zod, Framer Motion.
+
+7. Status and Links
+Status: Architecture Design Only.
+This project is currently documented as an architectural design specification and system integration blueprint. There is no public live deployment or production repository link (no fake URLs). Implementation is planned.
+
+8. What I'd Do Next (Planned Implementation)
+• Set up sandbox accounts for HubSpot and GoHighLevel to validate OAuth2 token refresh and webhook signature verification routines.
+• Author declarative PostgreSQL schema migration scripts in Supabase, codifying RLS policies, indexes, and audit triggers.
+• Implement the background queue worker using Supabase Edge Functions with a dedicated dead-letter management view.
+• Build out automated integration tests with Playwright to verify lead submission and real-time dashboard updates under simulated network failures.`,
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Supabase",
+      "PostgreSQL",
+      "Row-Level Security (RLS)",
+      "HubSpot API",
+      "GoHighLevel API",
+      "Karbon API",
+      "Edge Functions",
+      "Zod",
+    ],
+    impact: "Status: Architecture Design Only (self-initiated design specification; not deployed to production).",
+    impactLabel: "Status & Scope",
+  },
   "saudi-uzbek-business-council": {
     title: "Saudi Uzbek Business Council (SUBC) — Investor Relations Platform",
     category: "Investor Relations / Headless CMS",
@@ -162,7 +237,9 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               transition={{ delay: 0.4, duration: 1 }}
               className="space-y-8"
             >
-              {project.img && project.img.length > 0 ? (
+              {slug === "crm-integrated-website-supabase-web-app" ? (
+                <CrmArchitectureViewer />
+              ) : project.img && project.img.length > 0 ? (
                 <div className="relative">
                   <Carousel className="w-full">
                     <CarouselContent>
